@@ -1,0 +1,35 @@
+<div layout="row" ng-controller="carController" ng-cloak>
+    <div flex="10"></div>
+
+    <div flex="80" class='m-20px-0'>
+
+        <md-toolbar class="md-hue-2">
+            <div class="md-toolbar-tools">
+                <!-- page title -->
+                <div flex md-truncate>
+                    <h3>My Cars</h3>
+                </div>
+
+            </div>
+        </md-toolbar>
+
+
+        <md-content flex>
+            <!-- show product record list -->
+            <md-list ng-init="readCarsByUserId()">
+                <md-list-item class="md-3-line" ng-repeat="car in cars">
+
+                    <!-- product information -->
+                    <div class="md-list-item-text">
+                        <h3>{{car.name}}</h3>
+                        <p>Mileage {{car.mileage}}</p>
+                    </div>
+
+                    <md-divider ng-if="!$last"></md-divider>
+                </md-list-item>
+            </md-list>
+        </md-content>
+    </div>
+
+    <div flex="10"></div>
+</div> <!-- end row -->
