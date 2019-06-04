@@ -22,13 +22,13 @@ carmodule
     };
 
         // create car
-        service.create = function($scope){
+        service.create = function($rootScope, $scope){
         return $http({
             method: 'POST',
             data: {
                 'name' : $scope.name,
                 'mileage' : $scope.mileage,
-                'userid' : $scope.userid
+                'userid' : $rootScope.userid
             },
             url: 'http://autotrack/api/car/create.php'
         });
