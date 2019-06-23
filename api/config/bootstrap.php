@@ -8,6 +8,8 @@ use Doctrine\ORM\Tools\Setup;
 use Doctrine\ORM\EntityManager;
 
 require_once $_SERVER['DOCUMENT_ROOT']. '/vendor/autoload.php';
+//require_once 'vendor/autoload.php';
+
 
 
 // Create a simple "default" Doctrine ORM configuration for Annotations

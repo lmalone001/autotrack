@@ -11,33 +11,39 @@ header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
 
 // instantiate product object
-include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Car.php';
+include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/ServiceType.php';
 
-include_once $_SERVER['DOCUMENT_ROOT']. '/api/user/functions.php';
-include_once $_SERVER['DOCUMENT_ROOT']. '/api/car/functions.php';
+include_once $_SERVER['DOCUMENT_ROOT']. '/api/servicetype/functions.php';
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
 if(isset($data->name) &&
-    isset($data->mileage) &&
+    isset($data->frequency) &&
     isset($data->id)){
 
     // create the car
     try {
-        $car = read_car_by_id($entityManager, $data->id);
-        $car->setMileage($data->mileage);
-        $car->setName($data->name);
+        $servicetype = read_by_id($entityManager, $data->id);
 
+        $originalFreq = $servicetype->getFrequency();
+        $freqDiff = $data->frequency - $originalFreq;
 
-        update_car($entityManager, $car);
+        $origNextDue = $servicetype->getNextServiceDueMileage();
+        $newNextDue = $origNextDue + $freqDiff;
+
+        $servicetype->setFrequency($data->frequency);
+        $servicetype->setName($data->name);
+        $servicetype->setNextServiceDueMileage($newNextDue);
+
+        update_service_type($entityManager, $servicetype);
 
         // set response code - 201 created
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "Car was updated."));
+        echo json_encode(array("message" => "Service was updated."));
 
     } catch (Exception $e) {
 
@@ -47,7 +53,7 @@ if(isset($data->name) &&
         http_response_code(503);
 
         // tell the user
-        echo json_encode(array("message" => "Unable to update car. ". $e));
+        echo json_encode(array("message" => "Unable to update service. ". $e));
     }
 } else{
 
@@ -55,7 +61,7 @@ if(isset($data->name) &&
     http_response_code(400);
 
     // tell the user
-    echo json_encode(array("message" => "Unable to update car. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to update service. Data is incomplete."));
 
 }
 ?>

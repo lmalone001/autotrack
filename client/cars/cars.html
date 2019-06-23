@@ -7,13 +7,11 @@
             <div class="md-toolbar-tools">
                 <!-- page title -->
                 <div flex md-truncate>
-                    <h3 class="md-headline">My cars</h3>
+                    <h3 class="md-headline">My fleet</h3>
                 </div>
                 <!-- button for creating car -->
-                <div>
-                    <md-button class="md-raised" ng-click="showAddCarForm()">Track a new car</md-button>
-                </div>
 
+                <md-button class="md-raised" ng-click="showAddCarForm()">+</md-button>
 
             </div>
         </md-toolbar>
@@ -29,7 +27,23 @@
                         <h3>{{car.name}}</h3>
                         <p>Mileage {{car.mileage}}</p>
                     </div>
+                    <!-- 'read one', 'edit' and 'delete' buttons -->
+                    <div class="md-secondary-container">
+                        <!-- 'read one' button will be here -->
+                        <!-- 'edit' button will be here -->
+                        <md-button class="md-raised md-primary"
+                                   ng-click="setCar(car)"
+                            ng-href="#/schedule/' + {{car.id}}">
+                            View schedule</md-button>
+                        <md-button class="md-raised md-primary"
+                                   ng-click="showUpdateCarForm(car.id)">
+                            Edit</md-button>
+                        <md-button class="md-raised md-primary"
+                                   ng-click="confirmDeleteCar(car.id)">
+                            Delete</md-button>
+                        <!-- 'delete' button will be here -->
 
+                    </div>
                     <md-divider ng-if="!$last"></md-divider>
                 </md-list-item>
             </md-list>

@@ -46,7 +46,7 @@ class User implements JsonSerializable
     private $cars;
 
     public function __construct() {
-
+        $cars = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     public function getId()

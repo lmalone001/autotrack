@@ -2,7 +2,7 @@ var loginmodule = angular.module('client.login', []);
 
 loginmodule
     .controller('loginController',
-        function($rootScope, $scope, $mdDialog, $mdToast, userService) {
+        function($rootScope, $scope, $mdDialog, $mdToast, userService,$window) {
 
             // read products
             $scope.login = function(){
@@ -13,8 +13,11 @@ loginmodule
                     function successCallback(response){
                         console.log(response);
                         $rootScope.userid = response.data.user.id;
+
+                        $window.location.href = '/client/#/cars';
                     }, function errorCallback(response){
                         console.log(response);
+                        // $scope.showToast(response);
                     });
 
             }

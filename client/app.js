@@ -10,18 +10,34 @@ var myApp = angular.module('client', [
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('');
 
-  $routeProvider
+    $routeProvider
+      .when('/', {
+          templateUrl: 'cars/cars.html',
+          controller: 'carController',
+          controllerAs: 'cars'
+      })
       .when('/login', {
           templateUrl: 'login/login.html',
           controller: 'loginController',
           controllerAs: 'login'
       })
-      .when('/cars', {
+        .when('/schedule/:carId', {
+            templateUrl: 'serviceTypes/serviceTypes.html',
+            controller: 'carController',
+            controllerAs: 'myCar'
+        })
+        .when('/history/:serviceTypeId', {
+            templateUrl: 'history/history.html',
+            controller: 'carController',
+            controllerAs: 'cars'
+        })
+        .when('/cars', {
           templateUrl: 'cars/cars.html',
           controller: 'carController',
           controllerAs: 'cars'
        })
 
-      .otherwise({redirectTo: '/'});
+
+      .otherwise({redirectTo: '/cars'});
 }]);
 

@@ -40,7 +40,7 @@ class Car implements JsonSerializable
     private $user;
 
     public function __construct() {
-
+       $serviceTypes = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -80,6 +80,11 @@ class Car implements JsonSerializable
         return $this->id;
     }
 
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
     /**
      * @return mixed
      */
@@ -108,7 +113,7 @@ class Car implements JsonSerializable
 
     public function jsonSerialize() {
         return [
-            'user' => $this->id,
+            'id'=>$this->id,
             'name' => $this->name,
             'mileage' => $this->mileage,
         ];
