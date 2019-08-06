@@ -5,6 +5,7 @@
  * Date: 2019-06-11
  * Time: 19:53
  */
+include_once $_SERVER['DOCUMENT_ROOT']. '/api/service/functions.php';
 
 function create_servicetype($entityManager, $servicetype) {
 
@@ -39,8 +40,8 @@ function read_servicetype_by_id($entityManager, $id) {
 }
 
 function delete_service_type($entityManager, $id) {
-    $car = $entityManager->getRepository('ServiceType')->find($id);
-    $entityManager->remove($car);
+    $serviceType = $entityManager->getRepository('ServiceType')->find($id);
+    $entityManager->remove($serviceType);
     $entityManager->flush();
 
 }
@@ -49,7 +50,6 @@ function update_service_type($entityManager, $serviceType) {
     $entityManager->merge($serviceType);
     $entityManager->flush();
 }
-
 
 function read_by_id($entityManager, $id) {
     $qb = $entityManager->createQueryBuilder();

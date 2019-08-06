@@ -7,12 +7,8 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// get database connection
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
-
-// instantiate product object
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/User.php';
-
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/user/functions.php';
 
 // get posted data
@@ -33,7 +29,7 @@ if(!empty($data->username) &&
         http_response_code(201);
 
         // tell the user
-        echo json_encode(array("message" => "user was created."));
+        echo json_encode($user);
 
     } catch (Exception $e) {
 
@@ -41,15 +37,15 @@ if(!empty($data->username) &&
         http_response_code(503);
 
         // tell the user
-        echo json_encode(array("message" => "Unable to create user. ". $e));
+        echo json_encode(array("message" => "Unable to register. "));
     }
 
-} else{
+} else {
 
     // set response code - 400 bad request
     http_response_code(400);
 
     // tell the user
-    echo json_encode(array("message" => "Unable to create user. Data is incomplete."));
+    echo json_encode(array("message" => "Unable to register. Data is incomplete."));
 }
 ?>

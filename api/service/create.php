@@ -7,14 +7,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// get database connection
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
-
-// instantiate product object
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Service.php';
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/ServiceType.php';
-
-
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/service/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/servicetype/functions.php';
 
@@ -48,7 +43,6 @@ if(isset($data->serviceTypeId)){
     } catch (Exception $e) {
 
         // if unable to create the car, tell the user
-
         // set response code - 503 service unavailable
         http_response_code(503);
 

@@ -24,11 +24,7 @@ if(isset($data->id)) {
 
     // create the car
     try {
-//        $services = read_services_by_service_type_id($entityManager, $data->id);
-//        foreach ($services as $service) {
-//            echo $service;
-//            delete_service($entityManager, $service);
-//        }
+
         delete_service_type($entityManager, $data->id);
 
         // set response code - 201 deleted

@@ -4,6 +4,8 @@ loginmodule
 
         var service = {};
 
+        var host = 'http://ec2-3-91-237-5.compute-1.amazonaws.com/api/';
+
         // read user
         service.login = function($scope){
             console.log($scope.username);
@@ -18,7 +20,7 @@ loginmodule
                     'password' : $scope.password
 
                 },
-                url: 'http://autotrack/api/user/read_by_username_password.php',
+                url: host + 'user/read_by_username_password.php',
 
             });
         };
@@ -32,7 +34,7 @@ loginmodule
                     'username' : $scope.username,
                     'password' : $scope.password
                 },
-                url: 'http://autotrack/api/user/create.php'
+                url: host + 'user/create.php'
             });
         };
 

@@ -21,6 +21,11 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
           controller: 'loginController',
           controllerAs: 'login'
       })
+        .when('/register', {
+            templateUrl: 'register/register.html',
+            controller: 'loginController',
+            controllerAs: 'register'
+        })
         .when('/schedule/:carId', {
             templateUrl: 'serviceTypes/serviceTypes.html',
             controller: 'carController',
@@ -36,8 +41,26 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
           controller: 'carController',
           controllerAs: 'cars'
        })
-
-
-      .otherwise({redirectTo: '/cars'});
+        .when('/upcoming', {
+            templateUrl: 'cars/cars.html',
+            controller: 'carController',
+            controllerAs: 'cars'
+        })
+        .when('/history', {
+            templateUrl: 'cars/cars.html',
+            controller: 'carController',
+            controllerAs: 'cars'
+        })
+        .when('/logout', {
+            templateUrl: 'cars/cars.html',
+            controller: 'carController',
+            controllerAs: 'cars'
+        })
+        .when('', {
+            templateUrl: 'login/login.html',
+            controller: 'loginController',
+            controllerAs: 'login'
+        })
+        .otherwise({redirectTo: '/login'});
 }]);
 

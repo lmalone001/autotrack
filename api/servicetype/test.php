@@ -30,7 +30,7 @@ $query = $qb->getQuery();
 $servicetype = $query->getSingleResult();
 //echo var_dump($servicetype);
 //
-$services = $servicetype->getServices();
+$services = $servicetype->getName();
 var_dump($services);
 //foreach ($services as $service) {
 //    echo $service->getId();

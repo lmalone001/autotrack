@@ -18,6 +18,13 @@ function delete_service($entityManager, $service) {
     $entityManager->flush();
 }
 
+function delete_services($entityManager, $services) {
+    foreach ($services as $service) {
+        $entityManager->remove($service);
+    }
+    $entityManager->flush();
+}
+
 function read_services_by_service_type($entityManager, $serviceType) {
     $qb = $entityManager->createQueryBuilder();
     $qb->select('s')

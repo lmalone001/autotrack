@@ -35,6 +35,7 @@ function read_user_by_username($entityManager, $username) {
 function createUser($entityManager, $user) {
     $entityManager->persist($user);
     $entityManager->flush();
+    return $user;
 
 }
 

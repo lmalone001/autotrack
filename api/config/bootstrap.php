@@ -11,22 +11,24 @@ require_once $_SERVER['DOCUMENT_ROOT']. '/vendor/autoload.php';
 //require_once 'vendor/autoload.php';
 
 
-
-// Create a simple "default" Doctrine ORM configuration for Annotations
 $isDevMode = true;
 
-$config = Setup::createAnnotationMetadataConfiguration(array("/var/www/html/api/model"), $isDevMode);
+$config = Setup::createAnnotationMetadataConfiguration(array("/var/www/html/autotrack/api/model"), $isDevMode);
 
 $conn = [
     'driver' => 'pdo_mysql',
-    'host' => 'localhost',
+    'host' => 'autotrack-database.cfoq8eyanp9q.us-east-1.rds.amazonaws.com',
     'dbname' => 'autotrack',
     'user' => 'admin',
     'password' => 'password',
 
 ];
 
+try {
 // obtaining the entity manager
-$entityManager = EntityManager::create($conn, $config);
+    $entityManager = EntityManager::create($conn, $config);
+} catch (Exception $e) {
+    echo $e;
+}
 
 ?>

@@ -25,7 +25,7 @@
 
                 <md-input-container class="md-block">
                     <label>Password</label>
-                    <input ng-model="password">
+                    <input type="password" ng-model="password">
                 </md-input-container>
 
 
@@ -35,6 +35,13 @@
         <md-dialog-actions layout="row">
             <md-button ng-click="login()" class="md-primary">login</md-button>
         </md-dialog-actions>
+        <md-dialog-actions layout="row">
+            <a href="#/register">Don't have an account? Register here.</a>
+        </md-dialog-actions>
+
+        <!--<md-dialog-actions layout="row">-->
+            <!--<md-button ng-click="register()" class="md-primary">register</md-button>-->
+        <!--</md-dialog-actions>-->
     </form>
 
     <div flex="10"></div>

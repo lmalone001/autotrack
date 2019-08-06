@@ -7,12 +7,8 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// get database connection
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
-
-// instantiate product object
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Car.php';
-
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/user/functions.php';
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/car/functions.php';
 
@@ -20,7 +16,7 @@ include_once $_SERVER['DOCUMENT_ROOT']. '/api/car/functions.php';
 $data = json_decode(file_get_contents("php://input"));
 
 // make sure data is not empty
-if(isset($data->name) &&
+if (isset($data->name) &&
     isset($data->mileage) &&
     isset($data->id)){
 
@@ -29,7 +25,6 @@ if(isset($data->name) &&
         $car = read_car_by_id($entityManager, $data->id);
         $car->setMileage($data->mileage);
         $car->setName($data->name);
-
 
         update_car($entityManager, $car);
 
@@ -49,7 +44,7 @@ if(isset($data->name) &&
         // tell the user
         echo json_encode(array("message" => "Unable to update car. ". $e));
     }
-} else{
+} else {
 
     // set response code - 400 bad request
     http_response_code(400);

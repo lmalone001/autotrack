@@ -7,7 +7,6 @@
  */
 
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Car.php';
-
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Service.php';
 
 /**
@@ -39,15 +38,15 @@ class ServiceType implements JsonSerializable
      */
     private $car;
 
-//    /**
-//     * One servicetype has many services. This is the inverse side.
-//     * @OneToMany(targetEntity="Service", mappedBy="servicetype", orphanRemoval=true)
-//     */
-//    private $services;
+    /**
+     * One servicetype has many services. This is the inverse side.
+     * @OneToMany(targetEntity="Service", mappedBy="servicetype")
+     */
+    private $services;
 
-//    public function __construct() {
-//        $this->services = new \Doctrine\Common\Collections\ArrayCollection();
-//    }
+    public function __construct() {
+        $this->services = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * @var int
@@ -70,7 +69,6 @@ class ServiceType implements JsonSerializable
     {
         $this->nextServiceDueMileage = $nextServiceDueMileage;
     }
-
 
     /**
      * @return mixed
@@ -136,21 +134,21 @@ class ServiceType implements JsonSerializable
         $this->car = $car;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getServices()
-//    {
-//        return $this->services;
-//    }
+    /**
+     * @return mixed
+     */
+    public function getServices()
+    {
+        return $this->services;
+    }
 
-//    /**
-//     * @param mixed $services
-//     */
-//    public function setServices($services)
-//    {
-//        $this->services = $services;
-//    }
+    /**
+     * @param mixed $services
+     */
+    public function setServices($services)
+    {
+        $this->services = $services;
+    }
 
     public function jsonSerialize() {
         return [

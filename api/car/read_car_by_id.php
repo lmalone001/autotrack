@@ -7,14 +7,9 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Credentials: true");
 header('Content-Type: application/json');
 
-// get database connection
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
-
-// instantiate product object
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/Car.php';
-
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/car/functions.php';
-
 
 // get posted data
 $data = json_decode(file_get_contents("php://input"));

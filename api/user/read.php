@@ -3,18 +3,12 @@
 header("Access-Control-Allow-Origin: *");
 header("Content-Type: application/json; charset=UTF-8");
 
-// get database connection
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/config/bootstrap.php';
-
-// instantiate product object
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/User.php';
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/user/functions.php';
 
-
 //query products
-
 $array = readAllUsers($entityManager);
-
 $num = count($array);
 
 // check if more than 0 record found

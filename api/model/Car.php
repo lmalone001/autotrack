@@ -8,16 +8,12 @@
 
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/User.php';
 include_once $_SERVER['DOCUMENT_ROOT']. '/api/model/ServiceType.php';
-
-
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @Entity @Table(name="car")
  **/
 class Car implements JsonSerializable
 {
-
-
     /** @Id @Column(type="integer") @GeneratedValue **/
     private $id;
 
@@ -40,7 +36,7 @@ class Car implements JsonSerializable
     private $user;
 
     public function __construct() {
-       $serviceTypes = new \Doctrine\Common\Collections\ArrayCollection();
+       $this->serviceTypes = new ArrayCollection();
     }
 
     /**

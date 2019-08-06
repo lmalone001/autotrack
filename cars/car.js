@@ -2,20 +2,20 @@ var carmodule = angular.module('client.cars', []);
 
 carmodule
     .controller('carController',
-        function($routeParams, $scope, $rootScope, $mdDialog, $mdToast, $window,
-                 carService, userService) {
-        var myCar = this;
-        // myCar.carIdParam = $routeParams['carId'];
+        function($scope, $rootScope, $mdDialog, $mdToast, $window, $location,
+                 carService) {
 
-            // read products
+            $rootScope.location = $location;
+
+            // read cars
+
             $scope.readCarsByUserId = function(){
-
-                console.log($rootScope.userid);
+                var userId = localStorage.getItem("userId");
+                console.log(userId);
                 // use products factory
-                carService.readCarsByUserId($scope).then(
+                carService.readCarsByUserId(userId).then(
                     function successCallback(response){
                         console.log(response);
-
                         $scope.cars = response.data;
                     }, function errorCallback(response){
                         console.log(response);
@@ -37,7 +37,7 @@ carmodule
 
                     $mdDialog.show({
                         controller: DialogController,
-                        templateUrl: '/client/cars/update_car.html',
+                        templateUrl: '/cars/update_car.html',
                         parent: angular.element(document.body),
                         targetEvent: event,
                         clickOutsideToClose: true,
@@ -64,8 +64,8 @@ carmodule
             $scope.showUpdateServiceForm = function(id){
 
                 console.log(id);
-                $scope.id = id;
-                console.log($scope.id);
+                $scope.serviceTypeId = id;
+                console.log($scope.serviceTypeId);
                 // get product to be edited
                 carService.readServiceTypeById(id).then(function successCallback(response){
 
@@ -77,7 +77,7 @@ carmodule
 
                     $mdDialog.show({
                         controller: DialogController,
-                        templateUrl: '/client/serviceTypes/update_servicetype.html',
+                        templateUrl: '/serviceTypes/update_servicetype.html',
                         parent: angular.element(document.body),
                         targetEvent: event,
                         clickOutsideToClose: true,
@@ -102,26 +102,39 @@ carmodule
 
 
             $rootScope.setCar = function(car){
+                localStorage.setItem("carId", car.id);
+                localStorage.setItem("carName", car.name);
+                localStorage.setItem("carMileage", car.mileage);
 
-                $rootScope.carid = car.id;
-                $rootScope.carname = car.name;
-                $rootScope.carmileage = car.mileage;
+
+            }
+
+            $rootScope.getCar = function(){
+                $scope.carid = localStorage.getItem("carId");
+                $scope.carname = localStorage.getItem("carName");
+                $scope.carmileage = localStorage.getItem("carMileage");
+
+            }
+
+            $rootScope.getServiceType = function(){
+                $rootScope.getCar();
+                $scope.serviceTypeId = localStorage.getItem("serviceTypeId");
+                $scope.serviceTypeName = localStorage.getItem("serviceTypeName");
 
             }
 
             $rootScope.setServiceType = function(serviceType){
+                localStorage.setItem("serviceTypeId", serviceType.id);
+                localStorage.setItem("serviceTypeName", serviceType.name);
 
-                $rootScope.serviceTypeId = serviceType.id;
-                $rootScope.serviceTypeName = serviceType.name;
 
             }
 
-            // showCreateProductForm will be here
-            // show 'create product form' in dialog box
+            // show 'create car form' in dialog box
             $scope.showAddCarForm = function(){
                 $mdDialog.show({
                     controller: DialogController,
-                    templateUrl: '/client/cars/add_car.html',
+                    templateUrl: '/cars/add_car.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose: true,
                     scope: $scope,
@@ -133,7 +146,7 @@ carmodule
             $scope.showAddServiceForm = function(){
                 $mdDialog.show({
                     controller: DialogController,
-                    templateUrl: '/client/serviceTypes/add_service_type.html',
+                    templateUrl: '/serviceTypes/add_service_type.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose: true,
                     scope: $scope,
@@ -142,13 +155,13 @@ carmodule
                 });
             }
 
-            // show 'create product form' in dialog box
+
             $scope.showServiceTypes = function(){
 
-                console.log($rootScope.carid);
+                var carId = localStorage.getItem("carId");
 
                 // use products factory
-                carService.readServiceTypesByCarId($rootScope.carid).then(
+                carService.readServiceTypesByCarId(carId).then(
                     function successCallback(response){
                         console.log(response);
 
@@ -163,10 +176,16 @@ carmodule
 
             }
 
-            // update product record / save changes
+            // update car record / save changes
             $scope.updateCar = function(){
 
-                carService.updateCar($scope).then(function successCallback(response){
+                console.log($scope.name);
+                console.log($scope.mileage);
+                console.log($scope.id);
+
+                carService.updateCar($scope.name,
+                    $scope.mileage,
+                    $scope.id).then(function successCallback(response){
 
                         // tell the user product record was updated
                         $scope.showToast(response.data.message);
@@ -187,10 +206,12 @@ carmodule
 
             }
 
-            // update product record / save changes
+            // update service type record / save changes
             $scope.updateServiceType = function(){
 
-                carService.updateServiceType($scope).then(function successCallback(response){
+                carService.updateServiceType($scope.name,
+                    $scope.frequency,
+                    $scope.id).then(function successCallback(response){
 
                         // tell the user product record was updated
                         $scope.showToast(response.data.message);
@@ -213,10 +234,10 @@ carmodule
 
             $scope.showHistory = function(){
                 console.log("show history");
-                console.log($rootScope.serviceTypeId);
+                console.log($scope.serviceTypeId);
 
-                // use products factory
-                carService.readServicesByServiceTypeId($rootScope.serviceTypeId).then(
+                // use car service
+                carService.readServicesByServiceTypeId($scope.serviceTypeId).then(
                     function successCallback(response){
                         console.log(response);
 
@@ -233,7 +254,11 @@ carmodule
 
             $scope.createCar = function(){
 
-                carService.create($rootScope, $scope).then(
+                $name = $scope.name;
+                $mileage = $scope.mileage;
+                $userId = localStorage.getItem("userId");
+
+                carService.create($name, $mileage, $userId).then(
                     function successCallback(response){
 
                         // tell the user new product was created
@@ -255,7 +280,11 @@ carmodule
 
             $scope.createServiceType = function(){
 
-                carService.createServiceType($rootScope, $scope).then(
+                $name = $scope.name;
+                $frequency = $scope.frequency;
+                $carId = $scope.carid;
+
+                carService.createServiceType($name, $frequency, $carId).then(
                     function successCallback(response){
 
                         // tell the user new product was created
@@ -275,12 +304,12 @@ carmodule
                     });
             }
 
-            // delete product
-            $scope.deleteCar = function(){
+            // delete car
+            $scope.deleteCar = function(carId){
 
-                carService.deleteCar($scope.id).then(function successCallback(response){
+                carService.deleteCar(carId).then(function successCallback(response){
 
-                    // tell the user product was deleted
+                    // tell the user car was deleted
                     console.log(response);
                     $scope.showToast(response.data.message);
 
@@ -293,11 +322,11 @@ carmodule
 
             }
 
-            $scope.deleteServiceType = function(){
+            $scope.deleteServiceType = function(id){
 
-                carService.deleteServiceType($scope.id).then(function successCallback(response){
+                carService.deleteServiceType(id).then(function successCallback(response){
 
-                    // tell the user product was deleted
+                    // tell the user service type was deleted
                     console.log(response);
                     $scope.showToast(response.data.message);
 
@@ -311,10 +340,10 @@ carmodule
 
             }
 
-            $scope.completeServiceType = function(){
+            $scope.completeServiceType = function(id){
                 console.log("here");
-                console.log($scope.id);
-                carService.completeServiceType($scope.id).then(function successCallback(response){
+                console.log(id);
+                carService.completeServiceType(id).then(function successCallback(response){
 
                     // tell the user service was completed
                     console.log(response);
@@ -331,11 +360,11 @@ carmodule
             }
 
 
-            $scope.confirmDeleteCar = function(id){
+            $scope.confirmDeleteCar = function(carId){
 
                 // set id of record to delete
-                console.log(id);
-                $scope.id = id;
+                console.log(carId);
+                // $scope.carId = carId;
 
                 // dialog settings
                 var confirm = $mdDialog.confirm()
@@ -350,7 +379,7 @@ carmodule
                     // 'Yes' button
                     function() {
                         // if user clicked 'Yes', delete product record
-                        $scope.deleteCar();
+                        $scope.deleteCar(carId);
                     },
 
                     // 'No' button
@@ -365,7 +394,7 @@ carmodule
 
                 // set id of record to delete
                 console.log("servicetypeid" +id);
-                $scope.id = id;
+                // $scope.serviceTypeId = id;
 
                 // dialog settings
                 var confirm = $mdDialog.confirm()
@@ -380,7 +409,7 @@ carmodule
                     // 'Yes' button
                     function() {
                         // if user clicked 'Yes', delete product record
-                        $scope.deleteServiceType();
+                        $scope.deleteServiceType(id);
                     },
 
                     // 'No' button
@@ -409,7 +438,7 @@ carmodule
                     // 'Yes' button
                     function() {
                         // if user clicked 'Yes', delete product record
-                        $scope.completeServiceType();
+                        $scope.completeServiceType(id);
                     },
 
                     // 'No' button

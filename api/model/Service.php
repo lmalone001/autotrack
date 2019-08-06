@@ -10,17 +10,11 @@
 /**
  * @Entity @Table(name="service")
  **/
-class Service
-{
+class Service {
 
     /** @Id @Column(type="integer") @GeneratedValue **/
     private $id;
 
-//    /**
-//     * Many services have one servicetype. This is the owning side.
-//     * @ ManyToOne(targetEntity="ServiceType", inversedBy="services")
-//     * @ JoinColumn(name="iUserId", referencedColumnName="iUserId")
-//     */
     /**
      * Many services have one servicetype. This is the owning side.
      * @ManyToOne(targetEntity="ServiceType")
@@ -28,10 +22,8 @@ class Service
      */
     protected $serviceType;
 
-
     /** @Column(type="date")**/
     private $date;
-
 
     /** @Column(type="integer")**/
     private $mileage;
