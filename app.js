@@ -56,11 +56,11 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
             controller: 'carController',
             controllerAs: 'cars'
         })
-        .when('', {
-            templateUrl: 'login/login.html',
-            controller: 'loginController',
-            controllerAs: 'login'
-        })
-        .otherwise({redirectTo: '/login'});
+        // .when('', {
+        //     templateUrl: 'login/login.html',
+        //     controller: 'loginController',
+        //     controllerAs: 'login'
+        // })
+        // .otherwise({redirectTo: '/login'});
 }]);
 

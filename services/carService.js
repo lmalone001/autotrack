@@ -4,7 +4,8 @@ carmodule
 
     var service = {};
 
-    var host = 'http://ec2-3-91-237-5.compute-1.amazonaws.com/api/';
+        var host = 'https://autotracker.me/api/';
+    //     var host = 'http://ec2-3-222-168-195.compute-1.amazonaws.com/api/';
 
 
         // read cars by user id
